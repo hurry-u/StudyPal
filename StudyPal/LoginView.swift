@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct LoginView: View {
+    @State private var email: String = ""
+    @State private var password: String = ""
+    @State private var isLoggedIn = false
+    @State private var rememberMe = false
+    
     var body: some View {
-        Text("Hello, World! Login")
+        NavigationView{
+            VStack {
+                Image("Logo")
+            }
+        }
     }
 }
 
