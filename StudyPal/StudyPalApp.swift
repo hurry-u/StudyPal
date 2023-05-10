@@ -11,7 +11,8 @@ import SwiftUI
 struct StudyPalApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let loginView = LoginView()
+            loginView
         }
     }
 }
