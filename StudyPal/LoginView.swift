@@ -15,9 +15,36 @@ struct LoginView: View {
     
     var body: some View {
         NavigationView{
-            VStack {
-                Image("Logo")
+            VStack(spacing: 20){
+                VStack {
+                    Image("Logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 100)
+                        .padding(.top, 100)
+                }
+                Spacer()
+                
+                VStack(){
+                    Text("Email")
+                        .foregroundColor(.gray)
+                    TextField("",text:$email)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .autocapitalization(.none)
+                        .multilineTextAlignment(.center)
+                }
+                
+                VStack(){
+                    Text("Password")
+                        .foregroundColor(.gray)
+                    TextField("",text:$email)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .autocapitalization(.none)
+                        .multilineTextAlignment(.center)
+                }
+                Spacer()
             }
+            
         }
     }
 }
