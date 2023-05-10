@@ -2,7 +2,7 @@
 //  StudyPalApp.swift
 //  StudyPal
 //
-//  Created by Sana Chandna on 10/5/2023.
+//  Created by Sana Chandna & Gurudeep Dhinjan on 10/5/2023.
 //
 
 import SwiftUI

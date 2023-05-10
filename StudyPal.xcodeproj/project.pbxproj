@@ -11,6 +11,8 @@
 		C2F6ADD62A0B613B00AAFE65 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6ADD52A0B613B00AAFE65 /* ContentView.swift */; };
 		C2F6ADD82A0B613C00AAFE65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2F6ADD72A0B613C00AAFE65 /* Assets.xcassets */; };
 		C2F6ADDB2A0B613C00AAFE65 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2F6ADDA2A0B613C00AAFE65 /* Preview Assets.xcassets */; };
+		C2F6ADE22A0B63FE00AAFE65 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6ADE12A0B63FE00AAFE65 /* LoginView.swift */; };
+		C2F6ADE42A0B641200AAFE65 /* GreetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6ADE32A0B641200AAFE65 /* GreetingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		C2F6ADD52A0B613B00AAFE65 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C2F6ADD72A0B613C00AAFE65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C2F6ADDA2A0B613C00AAFE65 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C2F6ADE12A0B63FE00AAFE65 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		C2F6ADE32A0B641200AAFE65 /* GreetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +56,8 @@
 			isa = PBXGroup;
 			children = (
 				C2F6ADD32A0B613B00AAFE65 /* StudyPalApp.swift */,
+				C2F6ADE12A0B63FE00AAFE65 /* LoginView.swift */,
+				C2F6ADE32A0B641200AAFE65 /* GreetingView.swift */,
 				C2F6ADD52A0B613B00AAFE65 /* ContentView.swift */,
 				C2F6ADD72A0B613C00AAFE65 /* Assets.xcassets */,
 				C2F6ADD92A0B613C00AAFE65 /* Preview Content */,
@@ -137,6 +143,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2F6ADE22A0B63FE00AAFE65 /* LoginView.swift in Sources */,
+				C2F6ADE42A0B641200AAFE65 /* GreetingView.swift in Sources */,
 				C2F6ADD62A0B613B00AAFE65 /* ContentView.swift in Sources */,
 				C2F6ADD42A0B613B00AAFE65 /* StudyPalApp.swift in Sources */,
 			);

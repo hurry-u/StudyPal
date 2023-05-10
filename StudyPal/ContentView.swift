@@ -1,8 +1,7 @@
 //
 //  ContentView.swift
 //  StudyPal
-//
-//  Created by Sana Chandna on 10/5/2023.
+//  Created by Sana Chandna & Gurudeep Dhinjan on 10/5/2023.
 //
 
 import SwiftUI
@@ -13,7 +12,7 @@ struct ContentView: View {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
-            Text("Hello, world! Test")
+            Text("Hello, world!")
         }
         .padding()
     }
