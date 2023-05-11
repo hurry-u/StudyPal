@@ -50,6 +50,13 @@ struct LoginView: View {
                     if email == "john.smith@gmail.com" && password == "password" {
                         print("Logged in successfully!")
                         isLoggedIn = true
+                        if rememberMe {
+                            UserDefaults.standard.set(email, forKey: "email")
+                            UserDefaults.standard.set(password, forKey: "password")
+                        }
+                    } else {
+                        // Show an error message
+                        print("Error: Login failed")
                     }
                 }) {
                     NavigationLink(destination: GreetingView(username: "John"), isActive: $isLoggedIn) {
@@ -62,6 +69,14 @@ struct LoginView: View {
                     }
                 }
                 
+                HStack {
+                    Spacer()
+                    Toggle(isOn: $rememberMe) {
+                        Text("Remember me")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                }
                 
                 HStack(spacing: 20) {
                     Button(action: {
@@ -86,16 +101,41 @@ struct LoginView: View {
                             .clipShape(Circle())
                     }
                 }
+                
                 Spacer()
+                
+                Button(action: {
+                    // Navigate to the sign up screen
+                }) {
+                    Text("Don't have an account? Sign up")
+                        .foregroundColor(.gray)
+                }
             }
             .padding(.bottom, 20)
             .padding(.horizontal, 20)
+            .onAppear {
+                if let email = UserDefaults.standard.string(forKey: "email"),
+                   let password = UserDefaults.standard.string(forKey: "password") {
+                    self.email = email
+                    self.password = password
+                    rememberMe = true
+                    authenticateUser()
+                }
+            }
+            .onDisappear {
+                if !rememberMe {
+                    UserDefaults.standard.removeObject(forKey: "email")
+                    UserDefaults.standard.removeObject(forKey: "password")
+                }
+            }
         }
+    }
+    
+    func authenticateUser() {
+        isLoggedIn = true
     }
 }
     
-
-
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
