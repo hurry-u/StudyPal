@@ -52,7 +52,7 @@ struct LoginView: View {
                         isLoggedIn = true
                     }
                 }) {
-                    NavigationLink(destination: GreetingView(), isActive: $isLoggedIn) {
+                    NavigationLink(destination: GreetingView(username: "John"), isActive: $isLoggedIn) {
                         Text("Log in")
                             .frame(maxWidth: .infinity, minHeight: 44)
                             .font(.headline)

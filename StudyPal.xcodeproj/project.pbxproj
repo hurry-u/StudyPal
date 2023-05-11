@@ -13,6 +13,7 @@
 		C2F6ADE22A0B63FE00AAFE65 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6ADE12A0B63FE00AAFE65 /* LoginView.swift */; };
 		C2F6ADE42A0B641200AAFE65 /* GreetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6ADE32A0B641200AAFE65 /* GreetingView.swift */; };
 		CAED29EE2A0B651E00D83F8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAED29ED2A0B651E00D83F8A /* LaunchScreen.storyboard */; };
+		CAED29F02A0CDFEF00D83F8A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAED29EF2A0CDFEF00D83F8A /* MenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		C2F6ADE12A0B63FE00AAFE65 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C2F6ADE32A0B641200AAFE65 /* GreetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingView.swift; sourceTree = "<group>"; };
 		CAED29ED2A0B651E00D83F8A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CAED29EF2A0CDFEF00D83F8A /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 				C2F6ADD32A0B613B00AAFE65 /* StudyPalApp.swift */,
 				C2F6ADE12A0B63FE00AAFE65 /* LoginView.swift */,
 				C2F6ADE32A0B641200AAFE65 /* GreetingView.swift */,
+				CAED29EF2A0CDFEF00D83F8A /* MenuView.swift */,
 				C2F6ADD72A0B613C00AAFE65 /* Assets.xcassets */,
 				CAED29ED2A0B651E00D83F8A /* LaunchScreen.storyboard */,
 				C2F6ADD92A0B613C00AAFE65 /* Preview Content */,
@@ -145,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2F6ADE22A0B63FE00AAFE65 /* LoginView.swift in Sources */,
+				CAED29F02A0CDFEF00D83F8A /* MenuView.swift in Sources */,
 				C2F6ADE42A0B641200AAFE65 /* GreetingView.swift in Sources */,
 				C2F6ADD42A0B613B00AAFE65 /* StudyPalApp.swift in Sources */,
 			);

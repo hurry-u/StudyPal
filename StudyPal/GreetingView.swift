@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct GreetingView: View
-{
+struct GreetingView: View {
     let username: String
     
     @State private var bubble1Offset = CGSize(width: 0, height: 0)
@@ -16,10 +15,8 @@ struct GreetingView: View
     @State private var bubble3Offset = CGSize(width: 0, height: 0)
     @State private var isActive = false
     
-    var body: some View
-    {
-        ZStack
-        {
+    var body: some View {
+        ZStack {
             Circle()
                 .foregroundColor(Color("LColor1"))
                 .frame(width: 200, height: 200)
@@ -31,12 +28,11 @@ struct GreetingView: View
                 .offset(bubble2Offset)
             
             Circle()
-                .foregroundColor(Color("LColor1"))
+                .foregroundColor(Color("LColor3"))
                 .frame(width: 100, height: 100)
                 .offset(bubble3Offset)
                 
-            VStack
-            {
+            VStack {
                 Spacer()
                 
                 Text("Welcome back, \(username)!")
@@ -44,7 +40,7 @@ struct GreetingView: View
                     .fontWeight(.bold)
                     .padding()
                     .foregroundColor(.white)
-                    .background(Color(LColor4))
+                    .background(Color("LColor4"))
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                     .shadow(radius: 10)
                     .padding()
@@ -56,26 +52,30 @@ struct GreetingView: View
             }
             .edgesIgnoringSafeArea(.all)
         }
-        .onAppear
-        {
-            withAnimation(Animation.easeInOut(duration: 1.5).repeatForever(autoreverses: true))
-            {
+        .onAppear {
+            withAnimation(Animation.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
                 bubble1Offset = CGSize(width: -100, height: -100)
                 bubble2Offset = CGSize(width: 100, height: -100)
                 bubble3Offset = CGSize(width: 100, height: 100)
             }
-        }
-            DispatchQueue.main.asyncAfter (deadline: .now() + 3)
-            {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 isActive = true
             }
-            .background (
-                NavigationLink(
-                    destination: MenuView(),
-                    isActive: $isActive,
-                    label: EmptyView.init
-                              )
-                    .hidden()
-                        )
+        }
+        .background(
+            NavigationLink(
+                destination: MenuView(),
+                isActive: $isActive,
+                label: EmptyView.init
+            )
+            .hidden()
+        )
+    }
+}
+
+struct GreetingView_Previews: PreviewProvider {
+    static var previews: some View {
+        GreetingView(username: "")
     }
 }
