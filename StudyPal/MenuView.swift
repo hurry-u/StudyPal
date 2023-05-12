@@ -32,18 +32,18 @@ struct MenuView: View {
 //            }
 //        }
    // }
-func startTimer() {
-    self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-        if self.timeRemaining > 0 {
-            self.timeRemaining -= 1
-            self.progressValue = CGFloat(self.timeRemaining / Double(self.minutes * 60))
-        } else {
-            self.isDeepFocusModeOn = false
-            self.timer?.invalidate()
-            self.timer = nil
+    func startTimer() {
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            if self.timeRemaining > 0 {
+                self.timeRemaining -= 1
+                self.progressValue = CGFloat(self.timeRemaining / Double(self.minutes * 60))
+            } else {
+                self.isDeepFocusModeOn = false
+                self.timer?.invalidate()
+                self.timer = nil
+            }
         }
     }
-}
 
     func stopTimer() {
         timer?.invalidate()
@@ -104,21 +104,18 @@ func startTimer() {
                             .foregroundColor(.white)
                             
                         // Progress bar
-//                        ZStack {
-//                            ProgressView(value: progressValue, total: Double(minutes * 60))
-//                                .frame(width: progressBarWidth, height: 30.0)
-//                                .cornerRadius(progressBarCornerRadius)
-//                                .padding(.bottom, 20)
-//                        }
                         ZStack {
-                            ProgressView(value: progressValue, total: Double(minutes * 60))
-                                .frame(width: progressBarWidth, height: progressBarHeight)
-                                .progressViewStyle(LinearProgressViewStyle())
-                                .accentColor(.green)
-                                .cornerRadius(progressBarCornerRadius)
-                                .padding(.bottom, 20)
+                            GeometryReader { geometry in
+                                RoundedRectangle(cornerRadius: progressBarCornerRadius)
+                                    .foregroundColor(Color.gray.opacity(0.4))
+                                RoundedRectangle(cornerRadius: progressBarCornerRadius)
+                                    .foregroundColor(Color.green)
+                                    .frame(width: geometry.size.width * self.progressValue)
+                            }
+                            .frame(width: progressBarWidth, height: 7)
+                            .padding(.bottom, 20)
                         }
-
+                        
                         // Timer
                         Text(String(format: "%02d:%02d", Int(timeRemaining / 60), Int(timeRemaining) % 60))
                             .font(.custom("HelveticaNeue-Light", size: 80))
