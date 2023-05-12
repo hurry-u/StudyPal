@@ -12,6 +12,7 @@
 		C2F6ADDB2A0B613C00AAFE65 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2F6ADDA2A0B613C00AAFE65 /* Preview Assets.xcassets */; };
 		C2F6ADE22A0B63FE00AAFE65 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6ADE12A0B63FE00AAFE65 /* LoginView.swift */; };
 		C2F6ADE42A0B641200AAFE65 /* GreetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6ADE32A0B641200AAFE65 /* GreetingView.swift */; };
+		C2F6ADE82A0DD76C00AAFE65 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6ADE72A0DD76C00AAFE65 /* Quote.swift */; };
 		CAED29EE2A0B651E00D83F8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAED29ED2A0B651E00D83F8A /* LaunchScreen.storyboard */; };
 		CAED29F02A0CDFEF00D83F8A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAED29EF2A0CDFEF00D83F8A /* MenuView.swift */; };
 /* End PBXBuildFile section */
@@ -23,6 +24,7 @@
 		C2F6ADDA2A0B613C00AAFE65 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C2F6ADE12A0B63FE00AAFE65 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C2F6ADE32A0B641200AAFE65 /* GreetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingView.swift; sourceTree = "<group>"; };
+		C2F6ADE72A0DD76C00AAFE65 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		CAED29ED2A0B651E00D83F8A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CAED29EF2A0CDFEF00D83F8A /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,6 +63,7 @@
 				C2F6ADE12A0B63FE00AAFE65 /* LoginView.swift */,
 				C2F6ADE32A0B641200AAFE65 /* GreetingView.swift */,
 				CAED29EF2A0CDFEF00D83F8A /* MenuView.swift */,
+				C2F6ADE72A0DD76C00AAFE65 /* Quote.swift */,
 				C2F6ADD72A0B613C00AAFE65 /* Assets.xcassets */,
 				CAED29ED2A0B651E00D83F8A /* LaunchScreen.storyboard */,
 				C2F6ADD92A0B613C00AAFE65 /* Preview Content */,
@@ -150,6 +153,7 @@
 				C2F6ADE22A0B63FE00AAFE65 /* LoginView.swift in Sources */,
 				CAED29F02A0CDFEF00D83F8A /* MenuView.swift in Sources */,
 				C2F6ADE42A0B641200AAFE65 /* GreetingView.swift in Sources */,
+				C2F6ADE82A0DD76C00AAFE65 /* Quote.swift in Sources */,
 				C2F6ADD42A0B613B00AAFE65 /* StudyPalApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
