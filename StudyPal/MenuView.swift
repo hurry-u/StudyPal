@@ -10,7 +10,7 @@ import SwiftUI
 struct MenuView: View {
     @State private var currentQuote = Quote.getRandomQuote()
     @State private var isDeepFocusModeOn = false
-    @State private var minutes = 30
+    @State private var minutes = 5
     @State private var task = ""
     @State private var timeRemaining = 0.0
     @State private var timer: Timer?
@@ -20,19 +20,31 @@ struct MenuView: View {
     let progressBarHeight: CGFloat = 20.0
     let progressBarCornerRadius: CGFloat = 10.0
     
-    func startTimer() {
-        self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            if self.timeRemaining > 0 {
-                self.timeRemaining -= 1
-                self.progressValue = CGFloat(self.timeRemaining / Double(self.minutes * 60))
-            } else {
-                self.isDeepFocusModeOn = false
-                self.timer?.invalidate()
-                self.timer = nil
-            }
+    //func startTimer() {
+//     //   self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+//      //      if self.timeRemaining > 0 {
+//                self.timeRemaining -= 1
+//                self.progressValue = CGFloat(self.timeRemaining / Double(self.minutes * 60))
+//        //    } else {
+//                self.isDeepFocusModeOn = false
+//                self.timer?.invalidate()
+//                self.timer = nil
+//            }
+//        }
+   // }
+func startTimer() {
+    self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+        if self.timeRemaining > 0 {
+            self.timeRemaining -= 1
+            self.progressValue = CGFloat(self.timeRemaining / Double(self.minutes * 60))
+        } else {
+            self.isDeepFocusModeOn = false
+            self.timer?.invalidate()
+            self.timer = nil
         }
     }
-    
+}
+
     func stopTimer() {
         timer?.invalidate()
         isDeepFocusModeOn = false
@@ -56,7 +68,7 @@ struct MenuView: View {
 
                 VStack {
                     // Motivational Quote
-                    VStack(spacing: 10) {
+                    VStack(spacing: 15) {
                         Text("Quote of the Hour")
                             .font(.title3)
                             .fontWeight(.bold)
@@ -88,15 +100,24 @@ struct MenuView: View {
                             .cornerRadius(10)
                             .padding(.horizontal, 20)
                             .padding(.bottom, 20)
-                        
+                        Text("Please enter the task details to continue")
+                            .foregroundColor(.white)
+                            
                         // Progress bar
+//                        ZStack {
+//                            ProgressView(value: progressValue, total: Double(minutes * 60))
+//                                .frame(width: progressBarWidth, height: 30.0)
+//                                .cornerRadius(progressBarCornerRadius)
+//                                .padding(.bottom, 20)
+//                        }
                         ZStack {
                             ProgressView(value: progressValue, total: Double(minutes * 60))
-                                .frame(width: progressBarWidth, height: 30.0)
+                                .frame(width: progressBarWidth, height: progressBarHeight)
+                                .progressViewStyle(LinearProgressViewStyle())
+                                .accentColor(.green)
                                 .cornerRadius(progressBarCornerRadius)
                                 .padding(.bottom, 20)
                         }
-
 
                         // Timer
                         Text(String(format: "%02d:%02d", Int(timeRemaining / 60), Int(timeRemaining) % 60))
@@ -140,12 +161,12 @@ struct MenuView: View {
                                         .bold()
                                         .padding()
                                         .background(Color.green)
-                                        .foregroundColor(Color.white)
+                                        .foregroundColor(Color.black)
                                         .cornerRadius(10)
                                         .padding(.horizontal, 55)
                                 }
                                 .buttonStyle(PlainButtonStyle())
-                                .disabled(task.isEmpty || isDeepFocusModeOn || minutes < 30)
+                                .disabled(task.isEmpty || isDeepFocusModeOn || minutes < 5)
                                 
                                 Button(action: {
                                     isDeepFocusModeOn = false
@@ -157,7 +178,7 @@ struct MenuView: View {
                                         .bold()
                                         .padding()
                                         .background(Color.red)
-                                        .foregroundColor(Color.white)
+                                        .foregroundColor(Color.black)
                                         .cornerRadius(10)
                                         .padding(.horizontal, 55)
                                 }
@@ -174,7 +195,7 @@ struct MenuView: View {
                                     .bold()
                                     .padding()
                                     .background(Color.yellow)
-                                    .foregroundColor(Color.white)
+                                    .foregroundColor(Color.black)
                                     .cornerRadius(10)
                                     .padding(.horizontal, 55)
                             }
