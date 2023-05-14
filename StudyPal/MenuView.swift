@@ -124,7 +124,8 @@ struct MenuView: View {
                 self.timer?.invalidate()
                 self.timer = nil
                 
-                playTimerEndSound() // Play the sound when the timer ends
+                playTimerEndSound()
+                // Play the sound when the timer ends
             }
         }
     }
