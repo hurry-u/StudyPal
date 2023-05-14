@@ -6,22 +6,28 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct MenuView: View {
     @State private var currentQuote = Quote.getRandomQuote()
-    @State private var isDeepFocusModeOn = false
-    @State private var minutes = 5 {
-           didSet {
-               if minutes > 60 {
-                   minutes = 60
-               }
-           }
-       }
-    @State private var task = ""
-    @State private var timeRemaining = 0.0
-    @State private var timer: Timer?
-    @State private var progressValue: CGFloat = 1.0
-
+        @State private var isDeepFocusModeOn = false
+        @State private var minutes = 5 {
+            didSet {
+                if minutes > 60 {
+                    minutes = 60
+                }
+            }
+        }
+        @State private var task = ""
+        @State private var timeRemaining = 0.0
+        @State private var initialTimeRemaining = 0.0
+        @State private var timer: Timer?
+        @State private var progressValue: CGFloat = 1.0
+        @State private var audioPlayer: AVAudioPlayer?
+        @State private var isPaused = false
+        @State private var pausedTimeRemaining = 0.0
+        @State private var previousMinutes = 0
+    
     let progressBarWidth: CGFloat = 300.0
     let progressBarHeight: CGFloat = 20.0
     let progressBarCornerRadius: CGFloat = 10.0
@@ -38,9 +44,74 @@ struct MenuView: View {
 //            }
 //        }
    // }
+    
+    func playTimerEndSound() {
+        guard let soundURL = Bundle.main.url(forResource: "timer_end_sound", withExtension: "mp3") else {
+            return
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            audioPlayer?.play()
+        } catch {
+            print("Failed to play timer end sound: \(error)")
+        }
+    }
+
+    
+    
+//    func startTimer() {
+//            if timeRemaining <= 0 {
+//                // Start a new session
+//                timeRemaining = Double(minutes * 60)
+//                initialTimeRemaining = timeRemaining
+//            }
+//
+//            self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+//                if self.timeRemaining > 0 {
+//                    self.timeRemaining -= 1
+//                    self.progressValue = CGFloat(self.timeRemaining / Double(self.minutes * 60))
+//
+//                    // Check if the time remaining exceeds 60 minutes and adjust it
+//                    if self.timeRemaining > Double(60 * 60) {
+//                        self.timeRemaining = Double(60 * 60)
+//                    }
+//                } else {
+//                    self.isDeepFocusModeOn = false
+//                    self.timer?.invalidate()
+//                    self.timer = nil
+//
+//                    playTimerEndSound() // Play the sound when the timer ends
+//                }
+//            }
+//        }
     func startTimer() {
+        if !isPaused || timeRemaining <= 0 {
+            // Start a new session
+            timeRemaining = Double(minutes * 60)
+            initialTimeRemaining = timeRemaining
+            previousMinutes = minutes
+        } else {
+            // Resume from paused state
+            if previousMinutes != minutes {
+                // If minutes have changed since the last pause, reset the time remaining
+                timeRemaining = Double(minutes * 60)
+                initialTimeRemaining = timeRemaining
+                previousMinutes = minutes
+            } else {
+                timeRemaining = pausedTimeRemaining
+            }
+        }
+        
+        self.timer?.invalidate() // Invalidate the existing timer
+        
         self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             if self.timeRemaining > 0 {
+                if self.isPaused {
+                    self.pausedTimeRemaining = self.timeRemaining // Store the remaining time when paused
+                    return // Exit the closure and wait for the next tick
+                }
+                
                 self.timeRemaining -= 1
                 self.progressValue = CGFloat(self.timeRemaining / Double(self.minutes * 60))
                 
@@ -52,18 +123,26 @@ struct MenuView: View {
                 self.isDeepFocusModeOn = false
                 self.timer?.invalidate()
                 self.timer = nil
+                
+                playTimerEndSound() // Play the sound when the timer ends
             }
         }
     }
 
 
-    func stopTimer() {
-        timer?.invalidate()
-        isDeepFocusModeOn = false
-        timeRemaining = 0
-        progressValue = 1.0
-    }
-    
+        
+//        func stopTimer() {
+//            timer?.invalidate()
+//            isDeepFocusModeOn = false
+//            progressValue = 1.0
+//        }
+    func pauseTimer() {
+            isPaused = true
+            pausedTimeRemaining = timeRemaining
+            timer?.invalidate()
+            timer = nil
+        }
+
     func clearTimer() {
             timeRemaining = 0
             progressValue = 1.0
@@ -159,44 +238,47 @@ struct MenuView: View {
                         
                         
                         VStack {
-                            HStack {
-                                Button(action: {
-                                    isDeepFocusModeOn = true
-                                    timeRemaining = Double(minutes * 60)
-                                    startTimer()
-                                }) {
-                                    Text("Start")
-                                        .font(.headline)
-                                        .bold()
-                                        .padding()
-                                        .background(Color.green)
-                                        .foregroundColor(Color.black)
-                                        .cornerRadius(10)
-                                        .padding(.horizontal, 55)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                .disabled(task.isEmpty || isDeepFocusModeOn || minutes < 5)
-                                
-                                Button(action: {
-                                    isDeepFocusModeOn = false
-                                    timer?.invalidate()
-                                    progressValue = 1.0
-                                }) {
-                                    Text("Stop")
-                                        .font(.headline)
-                                        .bold()
-                                        .padding()
-                                        .background(Color.red)
-                                        .foregroundColor(Color.black)
-                                        .cornerRadius(10)
-                                        .padding(.horizontal, 55)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                            }
-                            .padding(.bottom, 10)
+                                            HStack {
+                                                Button(action: {
+                                                    isDeepFocusModeOn = true
+                                                    timeRemaining = Double(minutes * 60)
+                                                    startTimer()
+                                                }) {
+                                                    Text("Start")
+                                                        .font(.headline)
+                                                        .bold()
+                                                        .padding()
+                                                        .background(Color.green)
+                                                        .foregroundColor(Color.black)
+                                                        .cornerRadius(10)
+                                                        .padding(.horizontal, 55)
+                                                }
+                                                .buttonStyle(PlainButtonStyle())
+                                                .disabled(task.isEmpty || isDeepFocusModeOn || minutes < 5)
+                                                
+                                                Button(action: {
+                                                    isPaused.toggle()
+                                                    if isPaused {
+                                                        pauseTimer()
+                                                    } else {
+                                                        startTimer()
+                                                    }
+                                                }) {
+                                                    Text(isPaused ? "Resume" : "Pause")
+                                                        .font(.headline)
+                                                        .bold()
+                                                        .padding()
+                                                        .background(Color.red)
+                                                        .foregroundColor(Color.black)
+                                                        .cornerRadius(10)
+                                                        .padding(.horizontal, 55)
+                                                }
+                                                .buttonStyle(PlainButtonStyle())
+                                            }
+                                            .padding(.bottom, 10)
                             
                             Button(action: {
-                                stopTimer()
+                                pauseTimer()
                                 progressValue = 1.0
                             }) {
                                 Text("Clear")
