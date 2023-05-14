@@ -215,7 +215,7 @@ struct MenuView: View {
 
                         HStack(spacing: 20) {
                             Button(action: {
-                                minutes = max(30, minutes - 5)
+                                minutes = max(5, minutes - 5)
                                 timeRemaining = Double(minutes * 60)
                                 progressValue = 1.0
                             }) {
@@ -239,44 +239,45 @@ struct MenuView: View {
                         
                         
                         VStack {
-                                            HStack {
-                                                Button(action: {
-                                                    isDeepFocusModeOn = true
-                                                    timeRemaining = Double(minutes * 60)
-                                                    startTimer()
-                                                }) {
-                                                    Text("Start")
-                                                        .font(.headline)
-                                                        .bold()
-                                                        .padding()
-                                                        .background(Color.green)
-                                                        .foregroundColor(Color.black)
-                                                        .cornerRadius(10)
-                                                        .padding(.horizontal, 55)
-                                                }
-                                                .buttonStyle(PlainButtonStyle())
-                                                .disabled(task.isEmpty || isDeepFocusModeOn || minutes < 5)
-                                                
-                                                Button(action: {
-                                                    isPaused.toggle()
-                                                    if isPaused {
-                                                        pauseTimer()
-                                                    } else {
-                                                        startTimer()
-                                                    }
-                                                }) {
-                                                    Text(isPaused ? "Resume" : "Pause")
-                                                        .font(.headline)
-                                                        .bold()
-                                                        .padding()
-                                                        .background(Color.red)
-                                                        .foregroundColor(Color.black)
-                                                        .cornerRadius(10)
-                                                        .padding(.horizontal, 55)
-                                                }
-                                                .buttonStyle(PlainButtonStyle())
-                                            }
-                                            .padding(.bottom, 10)
+                            HStack {
+                                Button(action: {
+                                    isDeepFocusModeOn = true
+                                    timeRemaining = Double(minutes * 60)
+                                    startTimer()
+                                }) {
+                                    Text("Start")
+                                        .font(.headline)
+                                        .bold()
+                                        .padding()
+                                        .background(Color.green)
+                                        .foregroundColor(Color.black)
+                                        .cornerRadius(10)
+                                        .padding(.horizontal, 55)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .disabled(task.isEmpty || isDeepFocusModeOn || minutes < 5)
+                                
+                                Button(action: {
+                                    isPaused.toggle()
+                                    if isPaused {
+                                        pauseTimer()
+                                    } else {
+                                        startTimer()
+                                    }
+                                }) {
+                                    Text(isPaused ? "Resume" : "Pause")
+                                        .font(.headline)
+                                        .bold()
+                                        .padding()
+                                        .background(Color.red)
+                                        .foregroundColor(Color.black)
+                                        .cornerRadius(10)
+                                        .padding(.horizontal, 55)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                            .padding(.bottom, 10)
+
                             
                             Button(action: {
                                 pauseTimer()
