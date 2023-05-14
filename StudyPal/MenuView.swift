@@ -10,7 +10,13 @@ import SwiftUI
 struct MenuView: View {
     @State private var currentQuote = Quote.getRandomQuote()
     @State private var isDeepFocusModeOn = false
-    @State private var minutes = 5
+    @State private var minutes = 5 {
+           didSet {
+               if minutes > 60 {
+                   minutes = 60
+               }
+           }
+       }
     @State private var task = ""
     @State private var timeRemaining = 0.0
     @State private var timer: Timer?
@@ -37,6 +43,11 @@ struct MenuView: View {
             if self.timeRemaining > 0 {
                 self.timeRemaining -= 1
                 self.progressValue = CGFloat(self.timeRemaining / Double(self.minutes * 60))
+                
+                // Check if the time remaining exceeds 60 minutes and adjust it
+                if self.timeRemaining > Double(60 * 60) {
+                    self.timeRemaining = Double(60 * 60)
+                }
             } else {
                 self.isDeepFocusModeOn = false
                 self.timer?.invalidate()
@@ -44,6 +55,7 @@ struct MenuView: View {
             }
         }
     }
+
 
     func stopTimer() {
         timer?.invalidate()
