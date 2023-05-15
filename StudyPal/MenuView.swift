@@ -233,7 +233,7 @@ struct MenuView: View {
                                         .padding(.horizontal, 55)
                                 }
                                 .buttonStyle(PlainButtonStyle())
-                                .disabled(task.isEmpty || isDeepFocusModeOn || minutes < 5)
+                                .disabled(task.isEmpty || minutes < 5)
                                 
                                 Button(action: {
                                     isPaused.toggle()
