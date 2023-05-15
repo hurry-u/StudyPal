@@ -2,7 +2,7 @@
 //  MenuView.swift
 //  StudyPal
 //
-//  Created by Sana Chandna & Gurudeep Dhinjan on 10/5/2023.
+//  Created by Lavanya Chandna & Gurudeep Dhinjan on 10/5/2023.
 //
 
 import SwiftUI
@@ -154,41 +154,42 @@ struct MenuView: View {
             print("Failed to play lost sound: \(error)")
         }
     }
+    
     var body: some View {
-            NavigationView {
-                ZStack {
-                    // Background gradient
-                    LinearGradient(gradient: Gradient(colors: [Color("LColor4"), Color("Black")]), startPoint: .top, endPoint: .bottom)
-                        .edgesIgnoringSafeArea(.all)
-                    
-                    VStack {
-                        // Motivational Quote Heading
-                        VStack(spacing: 15) {
-                            Text(" The 2-Minute Wisdom")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                            
-                            // Changing quotes from the collection made in the Quote file.
-                            Text(currentQuote.text)
-                                .font(.custom("HelveticaNeue-Light", size: 18))
-                                .foregroundColor(.white)
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal, 20)
-                                .lineLimit(3)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .scaleEffect(isDeepFocusModeOn ? 1.0 : 0.8)
-                            // Apply scale animation
-
-                            Text("- \(currentQuote.author)")
-                                .font(.custom("HelveticaNeue-Light", size: 15))
-                                .foregroundColor(.white)
-                        }
-                        .padding(.top, 20)
-                        .padding(.horizontal, 20)
-
-                        Spacer()
+        NavigationView {
+            ZStack {
+                // Background gradient
+                LinearGradient(gradient: Gradient(colors: [Color("LColor4"), Color("Black")]), startPoint: .top, endPoint: .bottom)
+                    .edgesIgnoringSafeArea(.all)
+                
+                VStack {
+                    // Motivational Quote Heading
+                    VStack(spacing: 15) {
+                        Text(" The 2-Minute Wisdom")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
                         
+                        // Changing quotes from the collection made in the Quote file.
+                        Text(currentQuote.text)
+                            .font(.custom("HelveticaNeue-Light", size: 18))
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 20)
+                            .lineLimit(3)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .scaleEffect(isDeepFocusModeOn ? 1.0 : 0.8)
+                        // Apply scale animation
+                        
+                        Text("- \(currentQuote.author)")
+                            .font(.custom("HelveticaNeue-Light", size: 15))
+                            .foregroundColor(.white)
+                    }
+                    .padding(.top, 20)
+                    .padding(.horizontal, 20)
+                    
+                    Spacer()
+                    
                     VStack {
                         // Task to complete during session
                         TextField("Task to complete", text: $task)
@@ -201,7 +202,7 @@ struct MenuView: View {
                         Text("Enter The Task Details To Continue")
                         // To inform the users that they need to fill the text box inorder to activate the start button.
                             .foregroundColor(.white)
-                            
+                        
                         ZStack {
                             // Progress bar
                             GeometryReader { geometry in
@@ -217,12 +218,12 @@ struct MenuView: View {
                             .frame(width: progressBarWidth, height: 7)
                             .padding(.bottom, 20)
                         }
-
+                        
                         // Timer display
                         Text(String(format: "%02d:%02d", Int(timeRemaining / 60), Int(timeRemaining) % 60))
                             .font(.custom("HelveticaNeue-Light", size: 80))
                             .foregroundColor(isDeepFocusModeOn ? .green : .white)
-
+                        
                         HStack(spacing: 20) {
                             // Minus button to decrease the timer duration by 5 minutes
                             Button(action: {
@@ -247,7 +248,7 @@ struct MenuView: View {
                             .buttonStyle(PlainButtonStyle())
                         }
                         .foregroundColor(.white)
-
+                        
                         // Control buttons for timer
                         VStack {
                             HStack {
@@ -291,7 +292,7 @@ struct MenuView: View {
                                 .disabled(task.isEmpty || minutes < 5)
                             }
                             .padding(.bottom, 10)
-
+                            
                             // Clear button to reset the timer and progress bar
                             Button(action: {
                                 clearTimer()
@@ -312,27 +313,27 @@ struct MenuView: View {
                     }
                 }
             }
-                .navigationBarHidden(true)
-                .onAppear {
-                    // Hide the navigation bar at the top of the view. Update the quote every 2 minutes
-                    quoteTimer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
-                        // Execute the closure every 2 minutes
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            // Apply a smooth animation to the quote update
-                            currentQuote = Quote.getRandomQuote()
-                            // Update the current quote with a randomly selected quote
-                        }
+            .navigationBarHidden(true)
+            .onAppear {
+                // Hide the navigation bar at the top of the view. Update the quote every 2 minutes
+                quoteTimer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
+                    // Execute the closure every 2 minutes
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        // Apply a smooth animation to the quote update
+                        currentQuote = Quote.getRandomQuote()
+                        // Update the current quote with a randomly selected quote
                     }
-                    quoteTimer?.fire()
-                    // Immediately trigger the timer to start the quote updates. Set the initial time to 05:00 (5 minutes)
-                    timeRemaining = Double(minutes * 60)
-                    // Convert minutes to seconds and assign it to the timeRemaining variable
                 }
-                .onDisappear {
-                    // Execute the closure when the view disappears. Stop the quoteTimer by invalidating it. Set the quoteTimer to nil to release its reference and free up resources
-                    quoteTimer?.invalidate()
-                    quoteTimer = nil
-                }
+                quoteTimer?.fire()
+                // Immediately trigger the timer to start the quote updates. Set the initial time to 05:00 (5 minutes)
+                timeRemaining = Double(minutes * 60)
+                // Convert minutes to seconds and assign it to the timeRemaining variable
+            }
+            .onDisappear {
+                // Execute the closure when the view disappears. Stop the quoteTimer by invalidating it. Set the quoteTimer to nil to release its reference and free up resources
+                quoteTimer?.invalidate()
+                quoteTimer = nil
+            }
         }
     }
 }
