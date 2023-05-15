@@ -11,30 +11,47 @@ import AVFoundation
 struct MenuView: View {
     // State properties
     @State private var currentQuote = Quote.getRandomQuote()
+    //Store the current quote
     @State private var previousQuote: Quote?
+    //Store the previous quote
     @State private var quoteTimer: Timer?
+    // Timer for updating the quote
     @State private var isDeepFocusModeOn = false
+    // FLag for deep focus mode
     @State private var minutes = 5 {
         didSet {
             if minutes > 60 {
                 minutes = 60
             }
+            //Duration in minutes
         }
     }
     @State private var task = ""
+    //Task to complete during the session
     @State private var timeRemaining = 0.0
+    //Remaining time in seconds
     @State private var initialTimeRemaining = 0.0
+    //Initial time remaining
     @State private var timer: Timer?
+    //Timer for countdown
     @State private var progressValue: CGFloat = 1.0
+    //Progress value for the progress bar
     @State private var audioPlayer: AVAudioPlayer?
+    //Audio player for timer end sound
     @State private var isPaused = false
+    //Flag for paused state
     @State private var pausedTimeRemaining = 0.0
+    //Time remaining when paused
     @State private var previousMinutes = 0
+    //Previous duration in minutes
 
     
     let progressBarWidth: CGFloat = 300.0
+    //Width of the progress bar
     let progressBarHeight: CGFloat = 20.0
+    //Height of the progress bar
     let progressBarCornerRadius: CGFloat = 10.0
+    //Corner radius of the progress bar
     
     // Function that allows for the timer_end_sound to play when the clear button is pressed after the timer starts.
     func playTimerEndSound() {
@@ -78,12 +95,14 @@ struct MenuView: View {
             }
         }
         
-        self.timer?.invalidate() // Invalidate the existing timer
+        self.timer?.invalidate()
+        // Invalidate the existing timer
         
         self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             if self.timeRemaining > 0 {
                 if self.isPaused {
-                    self.pausedTimeRemaining = self.timeRemaining // Store the remaining time when paused
+                    self.pausedTimeRemaining = self.timeRemaining
+                    // Store the remaining time when paused
                     return
                     // Exit the closure and wait for the next tick
                 }
@@ -101,6 +120,7 @@ struct MenuView: View {
                 self.timer = nil
                 
                 playTimerEndSound()
+                //Play the sound when the timer ends
             }
         }
     }
@@ -182,11 +202,14 @@ struct MenuView: View {
                         // To inform the users that they need to fill the text box inorder to activate the start button.
                             .foregroundColor(.white)
                             
-                        // Progress bar
                         ZStack {
+                            // Progress bar
                             GeometryReader { geometry in
+                                // Gray background of the progress bar
                                 RoundedRectangle(cornerRadius: progressBarCornerRadius)
                                     .foregroundColor(Color.gray.opacity(0.4))
+                                
+                                // Green progress bar indicating the completion progress
                                 RoundedRectangle(cornerRadius: progressBarCornerRadius)
                                     .foregroundColor(Color.green)
                                     .frame(width: geometry.size.width * self.progressValue)
@@ -194,13 +217,14 @@ struct MenuView: View {
                             .frame(width: progressBarWidth, height: 7)
                             .padding(.bottom, 20)
                         }
-                        
-                        // Timer
+
+                        // Timer display
                         Text(String(format: "%02d:%02d", Int(timeRemaining / 60), Int(timeRemaining) % 60))
                             .font(.custom("HelveticaNeue-Light", size: 80))
                             .foregroundColor(isDeepFocusModeOn ? .green : .white)
 
                         HStack(spacing: 20) {
+                            // Minus button to decrease the timer duration by 5 minutes
                             Button(action: {
                                 minutes = max(5, minutes - 5)
                                 timeRemaining = Double(minutes * 60)
@@ -211,6 +235,7 @@ struct MenuView: View {
                             }
                             .buttonStyle(PlainButtonStyle())
                             
+                            // Plus button to increase the timer duration by 5 minutes
                             Button(action: {
                                 minutes = min(120, minutes + 5)
                                 timeRemaining = Double(minutes * 60)
@@ -222,10 +247,11 @@ struct MenuView: View {
                             .buttonStyle(PlainButtonStyle())
                         }
                         .foregroundColor(.white)
-                        
-                        //Buttons
+
+                        // Control buttons for timer
                         VStack {
                             HStack {
+                                // Start button to initiate the timer
                                 Button(action: {
                                     isDeepFocusModeOn = true
                                     timeRemaining = Double(minutes * 60)
@@ -243,6 +269,7 @@ struct MenuView: View {
                                 .buttonStyle(PlainButtonStyle())
                                 .disabled(task.isEmpty || minutes < 5)
                                 
+                                // Pause/Resume button to pause or resume the timer
                                 Button(action: {
                                     isPaused.toggle()
                                     if isPaused {
@@ -265,7 +292,7 @@ struct MenuView: View {
                             }
                             .padding(.bottom, 10)
 
-                            
+                            // Clear button to reset the timer and progress bar
                             Button(action: {
                                 clearTimer()
                                 progressValue = 1.0
@@ -286,23 +313,26 @@ struct MenuView: View {
                 }
             }
                 .navigationBarHidden(true)
-                        .onAppear {
-                            // Update the quote every 2 minutes
-                            quoteTimer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    currentQuote = Quote.getRandomQuote()
-                                }
-                            }
-                            quoteTimer?.fire()
-
-                            // Set initial time to 05:00
-                            timeRemaining = Double(minutes * 60)
+                .onAppear {
+                    // Hide the navigation bar at the top of the view. Update the quote every 2 minutes
+                    quoteTimer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
+                        // Execute the closure every 2 minutes
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            // Apply a smooth animation to the quote update
+                            currentQuote = Quote.getRandomQuote()
+                            // Update the current quote with a randomly selected quote
                         }
-                        .onDisappear {
-                            // Stop the quote timer when the view disappears
-                            quoteTimer?.invalidate()
-                            quoteTimer = nil
-                        }
+                    }
+                    quoteTimer?.fire()
+                    // Immediately trigger the timer to start the quote updates. Set the initial time to 05:00 (5 minutes)
+                    timeRemaining = Double(minutes * 60)
+                    // Convert minutes to seconds and assign it to the timeRemaining variable
+                }
+                .onDisappear {
+                    // Execute the closure when the view disappears. Stop the quoteTimer by invalidating it. Set the quoteTimer to nil to release its reference and free up resources
+                    quoteTimer?.invalidate()
+                    quoteTimer = nil
+                }
         }
     }
 }
