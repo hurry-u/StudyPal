@@ -10,6 +10,7 @@ import AVFoundation
 
 struct MenuView: View {
     @State private var currentQuote = Quote.getRandomQuote()
+    @State private var previousQuote: Quote?
     @State private var quoteTimer: Timer?
     @State private var isDeepFocusModeOn = false
     @State private var minutes = 5 {
@@ -80,7 +81,8 @@ struct MenuView: View {
             if self.timeRemaining > 0 {
                 if self.isPaused {
                     self.pausedTimeRemaining = self.timeRemaining // Store the remaining time when paused
-                    return // Exit the closure and wait for the next tick
+                    return
+                    // Exit the closure and wait for the next tick
                 }
                 
                 self.timeRemaining -= 1
@@ -127,52 +129,17 @@ struct MenuView: View {
             print("Failed to play lost sound: \(error)")
         }
     }
-
-
-
-//    var body: some View {
-//        NavigationView {
-//
-//            ZStack {
-//                // Background gradient
-//                LinearGradient(gradient: Gradient(colors: [Color("LColor4"), Color("Black")]), startPoint: .top, endPoint: .bottom)
-//                    .edgesIgnoringSafeArea(.all)
-//
-//                VStack {
-//                    // Motivational Quote
-//                    VStack(spacing: 15) {
-//                        Text("Quote of the Hour")
-//                            .font(.title3)
-//                            .fontWeight(.bold)
-//                            .foregroundColor(.white)
-//
-//                        Text(currentQuote.text)
-//                            .font(.custom("HelveticaNeue-Light", size: 18))
-//                            .foregroundColor(.white)
-//                            .multilineTextAlignment(.center)
-//                            .padding(.horizontal, 20)
-//                            .lineLimit(3)
-//                            .fixedSize(horizontal: false, vertical: true)
-//
-//                        Text("- \(currentQuote.author)")
-//                            .font(.custom("HelveticaNeue-Light", size: 15))
-//                            .foregroundColor(.white)
-//                    }
-//                    .padding(.top, 20)
-//                    .padding(.horizontal, 20)
-//
-//                    Spacer()
     var body: some View {
             NavigationView {
                 ZStack {
                     // Background gradient
                     LinearGradient(gradient: Gradient(colors: [Color("LColor4"), Color("Black")]), startPoint: .top, endPoint: .bottom)
                         .edgesIgnoringSafeArea(.all)
-
+                    
                     VStack {
                         // Motivational Quote
                         VStack(spacing: 15) {
-                            Text("Quote of the Hour")
+                            Text(" The 2-Minute Wisdom")
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
@@ -184,6 +151,7 @@ struct MenuView: View {
                                 .padding(.horizontal, 20)
                                 .lineLimit(3)
                                 .fixedSize(horizontal: false, vertical: true)
+                                .scaleEffect(isDeepFocusModeOn ? 1.0 : 0.8) // Apply scale animation
 
                             Text("- \(currentQuote.author)")
                                 .font(.custom("HelveticaNeue-Light", size: 15))
@@ -193,6 +161,7 @@ struct MenuView: View {
                         .padding(.horizontal, 20)
 
                         Spacer()
+                        
                     VStack {
                         // Task to complete during session
                         TextField("Task to complete", text: $task)
@@ -309,21 +278,23 @@ struct MenuView: View {
                 }
             }
                 .navigationBarHidden(true)
-                            .onAppear {
-                                // Update the quote every 2 minutes
-                                quoteTimer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
+                        .onAppear {
+                            // Update the quote every 2 minutes
+                            quoteTimer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
+                                withAnimation(.easeInOut(duration: 0.5)) {
                                     currentQuote = Quote.getRandomQuote()
                                 }
-                                quoteTimer?.fire()
-
-                                // Set initial time to 05:00
-                                timeRemaining = Double(minutes * 60)
                             }
-                            .onDisappear {
-                                // Stop the quote timer when the view disappears
-                                quoteTimer?.invalidate()
-                                quoteTimer = nil
-            }
+                            quoteTimer?.fire()
+
+                            // Set initial time to 05:00
+                            timeRemaining = Double(minutes * 60)
+                        }
+                        .onDisappear {
+                            // Stop the quote timer when the view disappears
+                            quoteTimer?.invalidate()
+                            quoteTimer = nil
+                        }
         }
     }
 }
