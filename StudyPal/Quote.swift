@@ -10,6 +10,7 @@ struct Quote {
     let author: String
     
     static func getRandomQuote() -> Quote {
+        // Array of quotes with their respective authors
         let quotesList = [
             Quote(text: "You don't have to be perfect to be amazing.", author: "Unknown"),
             Quote(text: "Chase your dreams, but always know the road that will lead you home again.", author: "Unknown"),
@@ -86,15 +87,9 @@ struct Quote {
             Quote(text: "Success is not the absence of failure; it's the persistence through failure.", author: "Aisha Tyler"),
             Quote(text: "Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle.", author: "Maya Angelou"),
             Quote(text: "Don't be afraid to give up the good to go for the great.", author: "LeBron James")
-
-
-
-
-
         ]
         
-       
-        
+        // Generate a random index within the range of the quotesList array
         let randomIndex = Int.random(in: 0..<quotesList.count)
         return quotesList[randomIndex]
     }

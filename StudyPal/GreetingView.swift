@@ -10,6 +10,8 @@ import SwiftUI
 struct GreetingView: View {
     let username: String
     
+    
+    // Define state variables for bubble offsets and isActive flag
     @State private var bubble1Offset = CGSize(width: 0, height: 0)
     @State private var bubble2Offset = CGSize(width: 0, height: 0)
     @State private var bubble3Offset = CGSize(width: 0, height: 0)
@@ -17,6 +19,7 @@ struct GreetingView: View {
     
     var body: some View {
         ZStack {
+            // Display the three bubbles
             Circle()
                 .foregroundColor(Color("LColor1"))
                 .frame(width: 200, height: 200)
@@ -35,6 +38,7 @@ struct GreetingView: View {
             VStack {
                 Spacer()
                 
+                // Display welcome message with the username
                 Text("Welcome back, \(username)!")
                     .font(.largeTitle)
                     .fontWeight(.bold)
@@ -53,17 +57,20 @@ struct GreetingView: View {
             .edgesIgnoringSafeArea(.all)
         }
         .onAppear {
+            // Animate bubble offsets
             withAnimation(Animation.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
                 bubble1Offset = CGSize(width: -100, height: -100)
                 bubble2Offset = CGSize(width: 100, height: -100)
                 bubble3Offset = CGSize(width: 100, height: 100)
             }
             
+            // Set isActive flag after a delay
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 isActive = true
             }
         }
         .background(
+            // Navigate to MenuView when isActive is true
             NavigationLink(
                 destination: MenuView(),
                 isActive: $isActive,
