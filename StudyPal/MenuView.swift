@@ -9,6 +9,7 @@ import SwiftUI
 import AVFoundation
 
 struct MenuView: View {
+    // State properties
     @State private var currentQuote = Quote.getRandomQuote()
     @State private var previousQuote: Quote?
     @State private var quoteTimer: Timer?
@@ -35,6 +36,7 @@ struct MenuView: View {
     let progressBarHeight: CGFloat = 20.0
     let progressBarCornerRadius: CGFloat = 10.0
     
+    // Function that allows for the timer_end_sound to play when the clear button is pressed after the timer starts.
     func playTimerEndSound() {
         guard let soundURL = Bundle.main.url(forResource: "timer_end_sound", withExtension: "mp3") else {
             return
@@ -48,7 +50,7 @@ struct MenuView: View {
         }
     }
 
-    
+    // Function starts timer when the start button is pressed.
     func startTimer() {
         if timeRemaining <= 0 {
             // Start a new session
@@ -71,7 +73,8 @@ struct MenuView: View {
                 self.timer?.invalidate()
                 self.timer = nil
                 
-                playTimerEndSound() // Play the sound when the timer ends
+                playTimerEndSound()
+                // Play the sound when the timer ends
             }
         }
         
@@ -101,14 +104,16 @@ struct MenuView: View {
             }
         }
     }
-
+    
+    // Function used to pause the timer.
     func pauseTimer() {
             isPaused = true
             pausedTimeRemaining = timeRemaining
             timer?.invalidate()
             timer = nil
         }
-
+    
+    // Function used to clear the timer.
     func clearTimer() {
         timeRemaining = Double(minutes * 60)
         progressValue = 1.0
@@ -117,7 +122,7 @@ struct MenuView: View {
         timer?.invalidate()
         timer = nil
         
-        // Play the "lost.mp3" sound when the timer is cleared
+        // Play the "lost.mp3" sound when the timer is cleared.
         guard let soundURL = Bundle.main.url(forResource: "lost", withExtension: "mp3") else {
             return
         }
@@ -137,13 +142,14 @@ struct MenuView: View {
                         .edgesIgnoringSafeArea(.all)
                     
                     VStack {
-                        // Motivational Quote
+                        // Motivational Quote Heading
                         VStack(spacing: 15) {
                             Text(" The 2-Minute Wisdom")
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
-
+                            
+                            // Changing quotes from the collection made in the Quote file.
                             Text(currentQuote.text)
                                 .font(.custom("HelveticaNeue-Light", size: 18))
                                 .foregroundColor(.white)
@@ -151,7 +157,8 @@ struct MenuView: View {
                                 .padding(.horizontal, 20)
                                 .lineLimit(3)
                                 .fixedSize(horizontal: false, vertical: true)
-                                .scaleEffect(isDeepFocusModeOn ? 1.0 : 0.8) // Apply scale animation
+                                .scaleEffect(isDeepFocusModeOn ? 1.0 : 0.8)
+                            // Apply scale animation
 
                             Text("- \(currentQuote.author)")
                                 .font(.custom("HelveticaNeue-Light", size: 15))
@@ -171,7 +178,8 @@ struct MenuView: View {
                             .cornerRadius(10)
                             .padding(.horizontal, 20)
                             .padding(.bottom, 20)
-                        Text("Please enter the task details to continue")
+                        Text("Enter The Task Details To Continue")
+                        // To inform the users that they need to fill the text box inorder to activate the start button.
                             .foregroundColor(.white)
                             
                         // Progress bar

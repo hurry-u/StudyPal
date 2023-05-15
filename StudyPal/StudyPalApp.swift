@@ -12,7 +12,9 @@ struct StudyPalApp: App {
     var body: some Scene {
         WindowGroup {
             let loginView = LoginView()
+            // Create an instance of LoginView
             loginView
+            // Set the LoginView as the main content of the window
         }
     }
 }
