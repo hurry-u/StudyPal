@@ -308,16 +308,21 @@ struct MenuView: View {
                     }
                 }
             }
-            .navigationBarHidden(true)
-            .onAppear {
-                // Update the quote every hour
-                let timer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { _ in
-                    currentQuote = Quote.getRandomQuote()
-                }
-                timer.fire()
-                
-                // Set initial time to 05:00
-                timeRemaining = Double(minutes * 60)
+                .navigationBarHidden(true)
+                            .onAppear {
+                                // Update the quote every 2 minutes
+                                quoteTimer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
+                                    currentQuote = Quote.getRandomQuote()
+                                }
+                                quoteTimer?.fire()
+
+                                // Set initial time to 05:00
+                                timeRemaining = Double(minutes * 60)
+                            }
+                            .onDisappear {
+                                // Stop the quote timer when the view disappears
+                                quoteTimer?.invalidate()
+                                quoteTimer = nil
             }
         }
     }
