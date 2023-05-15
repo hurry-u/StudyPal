@@ -10,6 +10,7 @@ import AVFoundation
 
 struct MenuView: View {
     @State private var currentQuote = Quote.getRandomQuote()
+    @State private var quoteTimer: Timer?
     @State private var isDeepFocusModeOn = false
     @State private var minutes = 5 {
         didSet {
@@ -129,39 +130,69 @@ struct MenuView: View {
 
 
 
+//    var body: some View {
+//        NavigationView {
+//
+//            ZStack {
+//                // Background gradient
+//                LinearGradient(gradient: Gradient(colors: [Color("LColor4"), Color("Black")]), startPoint: .top, endPoint: .bottom)
+//                    .edgesIgnoringSafeArea(.all)
+//
+//                VStack {
+//                    // Motivational Quote
+//                    VStack(spacing: 15) {
+//                        Text("Quote of the Hour")
+//                            .font(.title3)
+//                            .fontWeight(.bold)
+//                            .foregroundColor(.white)
+//
+//                        Text(currentQuote.text)
+//                            .font(.custom("HelveticaNeue-Light", size: 18))
+//                            .foregroundColor(.white)
+//                            .multilineTextAlignment(.center)
+//                            .padding(.horizontal, 20)
+//                            .lineLimit(3)
+//                            .fixedSize(horizontal: false, vertical: true)
+//
+//                        Text("- \(currentQuote.author)")
+//                            .font(.custom("HelveticaNeue-Light", size: 15))
+//                            .foregroundColor(.white)
+//                    }
+//                    .padding(.top, 20)
+//                    .padding(.horizontal, 20)
+//
+//                    Spacer()
     var body: some View {
-        NavigationView {
-    
-            ZStack {
-                // Background gradient
-                LinearGradient(gradient: Gradient(colors: [Color("LColor4"), Color("Black")]), startPoint: .top, endPoint: .bottom)
-                    .edgesIgnoringSafeArea(.all)
+            NavigationView {
+                ZStack {
+                    // Background gradient
+                    LinearGradient(gradient: Gradient(colors: [Color("LColor4"), Color("Black")]), startPoint: .top, endPoint: .bottom)
+                        .edgesIgnoringSafeArea(.all)
 
-                VStack {
-                    // Motivational Quote
-                    VStack(spacing: 15) {
-                        Text("Quote of the Hour")
-                            .font(.title3)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
+                    VStack {
+                        // Motivational Quote
+                        VStack(spacing: 15) {
+                            Text("Quote of the Hour")
+                                .font(.title3)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
 
-                        Text(currentQuote.text)
-                            .font(.custom("HelveticaNeue-Light", size: 18))
-                            .foregroundColor(.white)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 20)
-                            .lineLimit(3)
-                            .fixedSize(horizontal: false, vertical: true)
+                            Text(currentQuote.text)
+                                .font(.custom("HelveticaNeue-Light", size: 18))
+                                .foregroundColor(.white)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 20)
+                                .lineLimit(3)
+                                .fixedSize(horizontal: false, vertical: true)
 
-                        Text("- \(currentQuote.author)")
-                            .font(.custom("HelveticaNeue-Light", size: 15))
-                            .foregroundColor(.white)
-                    }
-                    .padding(.top, 20)
-                    .padding(.horizontal, 20)
+                            Text("- \(currentQuote.author)")
+                                .font(.custom("HelveticaNeue-Light", size: 15))
+                                .foregroundColor(.white)
+                        }
+                        .padding(.top, 20)
+                        .padding(.horizontal, 20)
 
-                    Spacer()
-
+                        Spacer()
                     VStack {
                         // Task to complete during session
                         TextField("Task to complete", text: $task)
